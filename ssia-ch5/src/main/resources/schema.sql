@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS authorities;
+DROP TABLE IF EXISTS users;
+
+CREATE TABLE users (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(45) NOT NULL,
+    password VARCHAR(45) NOT NULL,
+    enabled INT NOT NULL
+);
+
+CREATE TABLE authorities (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(45) NOT NULL,
+    authority VARCHAR(45) NOT NULL
+);
