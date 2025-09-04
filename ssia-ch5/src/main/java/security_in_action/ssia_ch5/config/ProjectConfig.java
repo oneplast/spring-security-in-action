@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -28,7 +27,9 @@ public class ProjectConfig {
                 .authenticationProvider(customAuthProvider)
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults());
+                .formLogin(form -> form
+                        .defaultSuccessUrl("/home", true)
+                );
 
         return http.build();
     }
