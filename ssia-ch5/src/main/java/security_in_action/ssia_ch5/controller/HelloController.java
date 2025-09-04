@@ -1,5 +1,6 @@
 package security_in_action.ssia_ch5.controller;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,5 +14,11 @@ public class HelloController {
         // 여기서 객체 바인딩 할 때, SecurityContextHolder.getContext().getAuthentication() (+.getPrincipal()) 사용
 
         return "Hello, " + a.getName() + "!";
+    }
+
+    @GetMapping("/bye")
+    @Async
+    public void goodbye(Authentication a) {
+        String username = a.getName();
     }
 }
