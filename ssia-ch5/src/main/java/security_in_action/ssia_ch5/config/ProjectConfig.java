@@ -2,6 +2,7 @@ package security_in_action.ssia_ch5.config;
 
 import java.util.List;
 import javax.sql.DataSource;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -18,7 +19,11 @@ import security_in_action.ssia_ch5.service.InMemoryUserDetailsService;
 
 @Configuration
 @EnableAsync
+@RequiredArgsConstructor
 public class ProjectConfig {
+
+    private final CustomAuthenticationSuccessHandler authenticationSuccessHandler;
+    private final CustomAuthenticationFailureHandler authenticationFailureHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationProvider customAuthProvider)
@@ -28,7 +33,8 @@ public class ProjectConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated())
                 .formLogin(form -> form
-                        .defaultSuccessUrl("/home", true)
+                        .successHandler(authenticationSuccessHandler)
+                        .failureHandler(authenticationFailureHandler)
                 );
 
         return http.build();
