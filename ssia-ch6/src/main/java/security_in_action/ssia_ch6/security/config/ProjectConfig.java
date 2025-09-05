@@ -1,8 +1,10 @@
 package security_in_action.ssia_ch6.security.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.scrypt.SCryptPasswordEncoder;
@@ -12,7 +14,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @RequiredArgsConstructor
 public class ProjectConfig {
 
-    private final AuthenticationProviderService authenticationProvider;
+    @Autowired
+    @Lazy
+    private AuthenticationProviderService authenticationProvider;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
