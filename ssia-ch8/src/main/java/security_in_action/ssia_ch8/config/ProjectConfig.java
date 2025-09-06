@@ -20,7 +20,8 @@ public class ProjectConfig {
         http
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/hello").hasRole("ADMIN")
-                        .requestMatchers("/ciao").hasRole("MANAGER"))
+                        .requestMatchers("/ciao").hasRole("MANAGER")
+                        .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
