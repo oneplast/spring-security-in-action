@@ -19,7 +19,8 @@ public class ProjectConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().hasRole("ADMIN"))
+                        .requestMatchers("/hello").hasRole("ADMIN")
+                        .requestMatchers("/ciao").hasRole("MANAGER"))
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
