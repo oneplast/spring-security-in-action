@@ -21,9 +21,8 @@ public class ProjectConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/a").authenticated()
-                        .requestMatchers(HttpMethod.POST, "/a").permitAll()
-                        .anyRequest().denyAll()
+                        .requestMatchers(HttpMethod.GET, "/a/b/**").authenticated()
+                        .anyRequest().permitAll()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults());
