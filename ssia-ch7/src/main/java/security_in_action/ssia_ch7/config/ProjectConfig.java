@@ -19,7 +19,7 @@ public class ProjectConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .anyRequest().permitAll())
+                        .anyRequest().hasAuthority("WRITE"))
                 .httpBasic(Customizer.withDefaults());
 
         return http.build();
