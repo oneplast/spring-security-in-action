@@ -21,6 +21,11 @@ public class SecurityFilterConfig {
     }
 
     @Bean
+    public StaticKeyAuthenticationFilter staticKeyAuthenticationFilter() {
+        return new StaticKeyAuthenticationFilter();
+    }
+
+    @Bean
     public FilterRegistrationBean<RequestValidationFilter> disableSecurityValidationFilter(
             RequestValidationFilter filter) {
         return disableGlobalFilterChain(filter);
@@ -29,6 +34,12 @@ public class SecurityFilterConfig {
     @Bean
     public FilterRegistrationBean<AuthenticationLoggingFilter> disableSecurityLoggingFilter(
             AuthenticationLoggingFilter filter) {
+        return disableGlobalFilterChain(filter);
+    }
+
+    @Bean
+    public FilterRegistrationBean<StaticKeyAuthenticationFilter> disableStaticKeyFilter(
+            StaticKeyAuthenticationFilter filter) {
         return disableGlobalFilterChain(filter);
     }
 
