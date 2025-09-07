@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import security_in_action.ssia_ch9.security.filter.AuthenticationLoggingFilter;
 import security_in_action.ssia_ch9.security.filter.RequestValidationFilter;
 
 @Configuration
@@ -13,11 +14,13 @@ import security_in_action.ssia_ch9.security.filter.RequestValidationFilter;
 public class ProjectConfig {
 
     private final RequestValidationFilter requestValidationFilter;
+    private final AuthenticationLoggingFilter loggingFilter;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.
                 addFilterBefore(requestValidationFilter, BasicAuthenticationFilter.class)
+                .addFilterAfter(loggingFilter, BasicAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll());
 
