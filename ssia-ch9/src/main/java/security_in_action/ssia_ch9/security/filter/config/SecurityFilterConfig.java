@@ -15,7 +15,7 @@ public class SecurityFilterConfig {
         return new RequestValidationFilter();
     }
 
-    @Bean
+//    @Bean
     public AuthenticationLoggingFilter authenticationLoggingFilter() {
         return new AuthenticationLoggingFilter();
     }
@@ -31,7 +31,7 @@ public class SecurityFilterConfig {
         return disableGlobalFilterChain(filter);
     }
 
-    @Bean
+//    @Bean
     public FilterRegistrationBean<AuthenticationLoggingFilter> disableSecurityLoggingFilter(
             AuthenticationLoggingFilter filter) {
         return disableGlobalFilterChain(filter);
