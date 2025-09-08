@@ -28,7 +28,6 @@ public class ProjectConfig {
 
         return http.build();
     }
-*/
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -37,6 +36,18 @@ public class ProjectConfig {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .defaultSuccessUrl("/main", true));
+
+        return http.build();
+    }
+ */
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/ciao"))
+                .authorizeHttpRequests(authorize -> authorize
+                        .anyRequest().permitAll());
 
         return http.build();
     }
