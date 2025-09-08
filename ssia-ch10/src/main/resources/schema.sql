@@ -1,0 +1,7 @@
+DROP TABLE IF EXISTS token;
+
+CREATE TABLE token (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    identifier VARCHAR(45) NULL,
+    token TEXT NULL
+);

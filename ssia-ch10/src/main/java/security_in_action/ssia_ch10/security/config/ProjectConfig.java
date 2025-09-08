@@ -11,10 +11,17 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.csrf.CsrfTokenRequestAttributeHandler;
+import security_in_action.ssia_ch10.security.csrf.repository.CustomCsrfTokenRepository;
+import security_in_action.ssia_ch10.security.filter.CsrfTokenSaveFilter;
 
 @Configuration
 @RequiredArgsConstructor
 public class ProjectConfig {
+
+    private final CustomCsrfTokenRepository customCsrfTokenRepository;
+    private final CsrfTokenSaveFilter tokenSaveFilter;
 
 /*
     private final CsrfTokenLogger csrfTokenLogger;
@@ -45,7 +52,10 @@ public class ProjectConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf
+                        .csrfTokenRepository(customCsrfTokenRepository)
+                        .csrfTokenRequestHandler(new CsrfTokenRequestAttributeHandler())
                         .ignoringRequestMatchers("/ciao"))
+                .addFilterAfter(tokenSaveFilter, CsrfFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().permitAll());
 
