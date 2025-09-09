@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS otp;
+
+CREATE TABLE user
+(
+    username VARCHAR(45) PRIMARY KEY,
+    password TEXT NULL
+);
+
+CREATE TABLE otp
+(
+    username VARCHAR(45) PRIMARY KEY,
+    code     VARCHAR(45) NULL
+);
