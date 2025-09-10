@@ -28,6 +28,7 @@ public class ProjectConfig {
 
     @Bean
     public ClientRegistrationRepository clientRepository() {
-        return new InMemoryClientRegistrationRepository(githubRegistration.regist());
+//        return new InMemoryClientRegistrationRepository(githubRegistration.regist());
+        return new InMemoryClientRegistrationRepository(githubRegistration.registByProvider());
     }
 }
