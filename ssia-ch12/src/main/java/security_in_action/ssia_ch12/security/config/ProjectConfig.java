@@ -5,16 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
-import org.springframework.security.oauth2.client.registration.InMemoryClientRegistrationRepository;
 import org.springframework.security.web.SecurityFilterChain;
-import security_in_action.ssia_ch12.security.oauth.config.GithubClientRegistration;
 
 @Configuration
 @RequiredArgsConstructor
 public class ProjectConfig {
 
-    private final GithubClientRegistration githubRegistration;
+//    private final GithubClientRegistration githubRegistration;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -26,9 +23,11 @@ public class ProjectConfig {
         return http.build();
     }
 
+/*
     @Bean
     public ClientRegistrationRepository clientRepository() {
 //        return new InMemoryClientRegistrationRepository(githubRegistration.regist());
         return new InMemoryClientRegistrationRepository(githubRegistration.registByProvider());
     }
+*/
 }
