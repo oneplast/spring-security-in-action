@@ -1,10 +1,7 @@
 package security_in_action.ssia_ch13.security.oauth2.config;
 
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.PASSWORD;
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.CLIENT_CREDENTIALS;
 
-import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationConsentService;
@@ -14,7 +11,6 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
-import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 
 @Configuration
 public class OAuth2Config {
@@ -31,7 +27,6 @@ public class OAuth2Config {
 
         return new InMemoryRegisteredClientRepository(List.of(client));
     }
-*/
 
     @Bean
     public RegisteredClientRepository clientRepository() {
@@ -57,6 +52,19 @@ public class OAuth2Config {
                 .build();
 
         return new InMemoryRegisteredClientRepository(List.of(client1, client2));
+    }
+ */
+
+    @Bean
+    public RegisteredClientRepository clientRepository() {
+        RegisteredClient client = RegisteredClient.withId("custom")
+                .clientId("client")
+                .clientSecret("secret")
+                .authorizationGrantTypes(set -> set.add(CLIENT_CREDENTIALS))
+                .scopes(set -> set.add("info"))
+                .build();
+
+        return new InMemoryRegisteredClientRepository(client);
     }
 
     @Bean
