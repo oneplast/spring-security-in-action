@@ -1,7 +1,10 @@
 package security_in_action.ssia_ch13.security.oauth2.config;
 
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.CLIENT_CREDENTIALS;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.PASSWORD;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
 
+import java.util.List;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationConsentService;
@@ -11,6 +14,7 @@ import org.springframework.security.oauth2.server.authorization.OAuth2Authorizat
 import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 
 @Configuration
 public class OAuth2Config {
@@ -27,6 +31,7 @@ public class OAuth2Config {
 
         return new InMemoryRegisteredClientRepository(List.of(client));
     }
+ */
 
     @Bean
     public RegisteredClientRepository clientRepository() {
@@ -34,7 +39,7 @@ public class OAuth2Config {
                 .clientId("client1")
                 .clientSecret("secret1")
                 .scopes(set -> set.addAll(List.of("read")))
-                .authorizationGrantTypes(set -> set.addAll(List.of(AUTHORIZATION_CODE)))
+                .authorizationGrantTypes(set -> set.addAll(List.of(AUTHORIZATION_CODE, REFRESH_TOKEN)))
                 .redirectUri("http://localhost:8080/home")
                 .clientSettings(ClientSettings.builder()
                         .requireAuthorizationConsent(false)
@@ -53,8 +58,8 @@ public class OAuth2Config {
 
         return new InMemoryRegisteredClientRepository(List.of(client1, client2));
     }
- */
 
+/*
     @Bean
     public RegisteredClientRepository clientRepository() {
         RegisteredClient client = RegisteredClient.withId("custom")
@@ -66,6 +71,7 @@ public class OAuth2Config {
 
         return new InMemoryRegisteredClientRepository(client);
     }
+*/
 
     @Bean
     public OAuth2AuthorizationService OAuth2AuthService() {
