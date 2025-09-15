@@ -12,3 +12,5 @@ spring:
           introspection-uri: http://localhost:8080/oauth2/introspect
           client-id: resourceClient
           client-secret: resourceSecret
+        jwt:
+          jwk-set-uri: http://localhost:8080/oauth2/jwks
