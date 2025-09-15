@@ -1,3 +1,14 @@
+server:
+  port: 9090
+
 spring:
   profiles:
     include: secret
+
+  security:
+    oauth2:
+      resourceserver:
+        opaque-token:
+          introspection-uri: http://localhost:8080/oauth2/introspect
+          client-id: resourceClient
+          client-secret: resourceSecret
