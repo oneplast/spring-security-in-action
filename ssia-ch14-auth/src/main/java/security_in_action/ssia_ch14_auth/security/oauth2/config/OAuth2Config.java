@@ -5,19 +5,24 @@ import static org.springframework.security.oauth2.core.AuthorizationGrantType.CL
 import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
 
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationConsentService;
-import org.springframework.security.oauth2.server.authorization.InMemoryOAuth2AuthorizationService;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationConsentService;
+import org.springframework.security.oauth2.server.authorization.JdbcOAuth2AuthorizationService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationConsentService;
 import org.springframework.security.oauth2.server.authorization.OAuth2AuthorizationService;
-import org.springframework.security.oauth2.server.authorization.client.InMemoryRegisteredClientRepository;
+import org.springframework.security.oauth2.server.authorization.client.JdbcRegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.security.oauth2.server.authorization.settings.ClientSettings;
 
 @Configuration
+@RequiredArgsConstructor
 public class OAuth2Config {
+
+    private final JdbcTemplate jdbcTemplate;
 
     @Bean
     public RegisteredClientRepository clientRepository() {
@@ -39,16 +44,26 @@ public class OAuth2Config {
                 .authorizationGrantType(CLIENT_CREDENTIALS)
                 .build();
 
-        return new InMemoryRegisteredClientRepository(client, resourceClient);
+        JdbcRegisteredClientRepository repo = new JdbcRegisteredClientRepository(jdbcTemplate);
+
+        if (repo.findByClientId("client") == null) {
+            repo.save(client);
+        }
+
+        if (repo.findByClientId("resourceClient") == null) {
+            repo.save(resourceClient);
+        }
+
+        return repo;
     }
 
     @Bean
     public OAuth2AuthorizationService oAuth2AuthService() {
-        return new InMemoryOAuth2AuthorizationService();
+        return new JdbcOAuth2AuthorizationService(jdbcTemplate, clientRepository());
     }
 
     @Bean
     public OAuth2AuthorizationConsentService oAuth2ConsentService() {
-        return new InMemoryOAuth2AuthorizationConsentService();
+        return new JdbcOAuth2AuthorizationConsentService(jdbcTemplate, clientRepository());
     }
 }
