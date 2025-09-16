@@ -1,6 +1,6 @@
 package security_in_action.ssia_ch15_auth.security.oauth2.config;
 
-import static org.springframework.security.oauth2.core.AuthorizationGrantType.PASSWORD;
+import static org.springframework.security.oauth2.core.AuthorizationGrantType.AUTHORIZATION_CODE;
 import static org.springframework.security.oauth2.core.AuthorizationGrantType.REFRESH_TOKEN;
 
 import java.time.Duration;
@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.server.authorization.settings.TokenSe
 @Configuration
 public class OAuth2Config {
 
+/*
     @Bean
     public RegisteredClientRepository clientRepository() {
         RegisteredClient client = RegisteredClient.withId("client")
@@ -30,6 +31,29 @@ public class OAuth2Config {
                         List.of(PASSWORD, REFRESH_TOKEN)))
                 .scope("read")
                 .redirectUri("http://localhost:8080")
+                .tokenSettings(TokenSettings.builder()
+                        .accessTokenTimeToLive(Duration.ofMinutes(60))
+                        .refreshTokenTimeToLive(Duration.ofDays(30))
+                        .reuseRefreshTokens(false)
+                        .build())
+                .clientSettings(ClientSettings.builder()
+                        .requireAuthorizationConsent(false)
+                        .build())
+                .build();
+
+        return new InMemoryRegisteredClientRepository(client);
+    }
+*/
+
+    @Bean
+    public RegisteredClientRepository clientRepository() {
+        RegisteredClient client = RegisteredClient.withId("client")
+                .clientId("client")
+                .clientSecret("secret")
+                .authorizationGrantTypes(set -> set.addAll(
+                        List.of(AUTHORIZATION_CODE, REFRESH_TOKEN)))
+                .scope("read")
+                .redirectUri("http://localhost:8080/home")
                 .tokenSettings(TokenSettings.builder()
                         .accessTokenTimeToLive(Duration.ofMinutes(60))
                         .refreshTokenTimeToLive(Duration.ofDays(30))
