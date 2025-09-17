@@ -67,7 +67,7 @@ public class JwtConfig {
 
             Set<String> scopes = context.getAuthorizedScopes();
             if (!ObjectUtils.isEmpty(scopes)) {
-                context.getClaims().claim("scope", String.join(", ", scopes));
+                context.getClaims().claim("scope", String.join(" ", scopes));
             }
 
             Authentication principal = context.getPrincipal();
