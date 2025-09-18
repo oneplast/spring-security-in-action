@@ -3,4 +3,4 @@ server:
 
 spring:
   profiles:
-    include: security
+    include: secret
