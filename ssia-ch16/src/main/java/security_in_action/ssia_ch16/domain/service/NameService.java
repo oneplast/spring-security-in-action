@@ -1,5 +1,6 @@
 package security_in_action.ssia_ch16.domain.service;
 
+import jakarta.annotation.security.RolesAllowed;
 import java.util.List;
 import java.util.Map;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +14,8 @@ public class NameService {
             "emma", List.of("Fantastico")
     );
 
-    @PreAuthorize("hasAuthority('write')")
+//    @PreAuthorize("hasAuthority('write')")
+    @RolesAllowed("admin")
     public String getName() {
         return "Fantastico";
     }
