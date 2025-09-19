@@ -18,7 +18,7 @@ public class WebSecurityConfig {
 
         UserDetails u = User.withUsername("john")
                 .password("12345")
-                .authorities("read")
+                .authorities("ROLE_USER", "read")
                 .build();
 
         uds.createUser(u);

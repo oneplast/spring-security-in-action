@@ -12,6 +12,7 @@ import java.security.KeyStore;
 import java.security.PrivateKey;
 import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
@@ -78,6 +79,8 @@ public class JwtConfig {
 
                 context.getClaims().claim("roles", roles);
             }
+
+            context.getClaims().claim("generatedInZone", ZoneId.systemDefault().toString());
         };
     }
 }
