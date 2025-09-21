@@ -4,3 +4,9 @@ server:
 spring:
   profiles:
     include: secret
+
+custom:
+  jwt:
+    claim:
+      aud: fitnessapp
+    jwk-set-uri: http://localhost:8080/realms/master/protocol/openid-connect/certs
