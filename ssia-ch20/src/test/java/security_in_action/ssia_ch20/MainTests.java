@@ -1,5 +1,6 @@
 package security_in_action.ssia_ch20;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -36,6 +37,13 @@ public class MainTests {
     @WithMockUser(username = "mary")
     public void helloAuthenticatedByUsername() throws Exception {
         mvc.perform(get("/hello"))
+                .andExpect(content().string("Hello, mary!"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void helloAuthenticationWithUser() throws Exception {
+        mvc.perform(get("/hello").with(user("mary")))
                 .andExpect(content().string("Hello, mary!"))
                 .andExpect(status().isOk());
     }
