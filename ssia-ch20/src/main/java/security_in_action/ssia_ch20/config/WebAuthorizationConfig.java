@@ -12,6 +12,7 @@ public class WebAuthorizationConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
+                .authenticationProvider(new CustomAuthenticationProvider())
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());

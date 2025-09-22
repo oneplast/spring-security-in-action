@@ -1,5 +1,6 @@
 package security_in_action.ssia_ch20;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -62,5 +63,19 @@ public class MainTests {
     public void helloAuthenticatedByCustomUser() throws Exception {
         mvc.perform(get("/hello"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void helloAuthenticatedWithValidUser() throws Exception {
+        mvc.perform(get("/hello")
+                        .with(httpBasic("john", "12345")))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void helloAuthenticationWithInvalidUser() throws Exception {
+        mvc.perform(get("/hello")
+                        .with(httpBasic("mary", "12345")))
+                .andExpect(status().isUnauthorized());
     }
 }
