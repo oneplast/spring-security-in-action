@@ -31,4 +31,12 @@ public class MainTests {
                 .andExpect(content().string("Hello!"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    @WithMockUser(username = "mary")
+    public void helloAuthenticatedByUsername() throws Exception {
+        mvc.perform(get("/hello"))
+                .andExpect(content().string("Hello, mary!"))
+                .andExpect(status().isOk());
+    }
 }
