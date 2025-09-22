@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
@@ -45,6 +46,13 @@ public class MainTests {
     public void helloAuthenticationWithUser() throws Exception {
         mvc.perform(get("/hello").with(user("mary")))
                 .andExpect(content().string("Hello, mary!"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithUserDetails("john")
+    public void helloAuthenticatedByWithUserDetails() throws Exception {
+        mvc.perform(get("/hello"))
                 .andExpect(status().isOk());
     }
 }
