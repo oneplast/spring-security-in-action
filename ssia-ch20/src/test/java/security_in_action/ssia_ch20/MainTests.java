@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.servlet.MockMvc;
+import security_in_action.ssia_ch20.security.context.annotation.WithCustomUser;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -52,6 +53,13 @@ public class MainTests {
     @Test
     @WithUserDetails("john")
     public void helloAuthenticatedByWithUserDetails() throws Exception {
+        mvc.perform(get("/hello"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @WithCustomUser(username = "mary")
+    public void helloAuthenticatedByCustomUser() throws Exception {
         mvc.perform(get("/hello"))
                 .andExpect(status().isOk());
     }
