@@ -16,12 +16,18 @@ public class UserManagementConfig {
     public UserDetailsService userDetailsService() {
         InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
 
-        UserDetails user = User.withUsername("john")
+        UserDetails user1 = User.withUsername("john")
                 .password("12345")
                 .authorities("read")
                 .build();
 
-        userDetailsService.createUser(user);
+        UserDetails user2 = User.withUsername("mary")
+                .password("12345")
+                .authorities("write")
+                .build();
+
+        userDetailsService.createUser(user1);
+        userDetailsService.createUser(user2);
         return userDetailsService;
     }
 
