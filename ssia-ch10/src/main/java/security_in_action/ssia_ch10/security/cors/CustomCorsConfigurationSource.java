@@ -13,7 +13,7 @@ public class CustomCorsConfigurationSource {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOriginPatterns(List.of("http*://example.com", "http*://example.org"));
+        config.setAllowedOriginPatterns(List.of("http*://localhost:8080", "http*://127.0.0.1:8080"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
