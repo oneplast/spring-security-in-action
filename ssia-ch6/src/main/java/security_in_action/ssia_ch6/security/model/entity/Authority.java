@@ -18,7 +18,7 @@ public class Authority {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    private String name;;
+    private String name;
 
     @ManyToOne
     @JoinColumn(name = "user")
